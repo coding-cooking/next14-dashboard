@@ -26,7 +26,7 @@ const SingleProductPage = async ({ params }) => {
                     <input
                         type="text"
                         name="color"
-                        placeholder="color"
+                        placeholder="red"
                     />
                     <label>Size</label>
                     <textarea
