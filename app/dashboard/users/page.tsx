@@ -6,10 +6,22 @@ import Image from 'next/image'
 import Pagination from '../../ui/dashboard/pagination/Pagination'
 import { fetchUsers } from '../../lib/data'
 
-const UsersPage = async () => {
+type User = {
+  id: string,
+  createdAt: Date,
+  username: string,
+  email: string,
+  password: string,
+  img?: string,
+  isAdmin?: boolean,
+  isActive?: boolean,
+  phone?: boolean,
+  address?: boolean,
+}
 
-  const users = await fetchUsers();
-  console.log(users);
+const UsersPage = async ({searchParams}) => {
+  const q = searchParams?.q || "";
+  const users: User[] = await fetchUsers(q);
 
   return (
     <div className={styles.container}>
