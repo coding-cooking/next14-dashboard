@@ -24,6 +24,8 @@ const UsersPage = async ({searchParams}) => {
   const page = searchParams?.page || "1";
   const {count, users} = await fetchUsers(q, page);
 
+  console.log("====",searchParams)
+
 
   return (
     <div className={styles.container}>
@@ -45,7 +47,7 @@ const UsersPage = async ({searchParams}) => {
           </tr>
         </thead>
         <tbody>
-          {users.map(user => (
+          {(users as User[]).map(user => (
             <tr key={user.id}>
               <td><div className={styles.user}>
                 <Image src={user.img || "/noavatar.png"} alt="" width={40} height={40} className={styles.userImage} />
