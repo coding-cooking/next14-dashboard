@@ -15,8 +15,8 @@ type User = {
   img?: string,
   isAdmin?: boolean,
   isActive?: boolean,
-  phone?: boolean,
-  address?: boolean,
+  phone?: string,
+  address?: string,
 }
 
 const UsersPage = async ({searchParams}) => {
