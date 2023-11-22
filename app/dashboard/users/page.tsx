@@ -24,9 +24,6 @@ const UsersPage = async ({searchParams}) => {
   const page = searchParams?.page || "1";
   const {count, users} = await fetchUsers(q, page);
 
-  console.log("====",searchParams)
-
-
   return (
     <div className={styles.container}>
       <div className={styles.top}>

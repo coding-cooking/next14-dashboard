@@ -29,7 +29,6 @@ export const fetchProducts = async (q, page) => {
         connectToDB();
         const count = (await Product.find({ title: { $regex: regex } })).length;
         const products = await Product.find({ title: { $regex: regex } }).limit(ITEM_PER_PAGE).skip(ITEM_PER_PAGE * (page - 1));
-        console.log('iiii', products)
         return { count, products };
 
     } catch (err) {
