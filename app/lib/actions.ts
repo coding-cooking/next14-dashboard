@@ -8,7 +8,6 @@ import bcrypt from 'bcrypt';
 
 export const addUser = async (formData) => {
     let { username, email, password, phone, isAdmin, isActive, address } = Object.fromEntries(formData);
-    console.log(formData);
     //transform the data type from string to boolean
     isAdmin = isAdmin === 'true' ? true : false;
     isActive = isActive === 'true' ? true : false;
@@ -38,6 +37,21 @@ export const addUser = async (formData) => {
     redirect("/dashboard/users");
 }
 
+export const deleteUser = async (formData) => {
+    let { id } = Object.fromEntries(formData);
+    
+    try {
+        connectToDB();
+
+        await User.findByIdAndDelete(id);
+
+    } catch (error) {
+        console.log(error);
+        throw new Error("Fail to delete the user")
+    }
+    revalidatePath("/dashboard/users");
+}
+
 export const addProduct = async (formData) => {
     let { title,category, price, stock, icolor, size, desc } = Object.fromEntries(formData);
 
@@ -55,4 +69,19 @@ export const addProduct = async (formData) => {
     }
     revalidatePath("/dashboard/products");
     redirect("/dashboard/products");
+}
+
+export const deleteProduct = async (formData) => {
+    let { id } = Object.fromEntries(formData);
+
+    try {
+        connectToDB();
+
+        await Product.findByIdAndDelete(id);
+
+    } catch (error) {
+        console.log(error);
+        throw new Error("Fail to delete the product")
+    }
+    revalidatePath("/dashboard/products");
 }

@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Pagination from '../../ui/dashboard/pagination/Pagination'
 import { fetchUsers } from '../../lib/data'
+import { deleteUser } from '../../lib/actions'
 
 type User = {
   id: string,
@@ -59,7 +60,10 @@ const UsersPage = async ({searchParams}) => {
                   <Link href={`/dashboard/users/${user.id}`}>
                     <button className={`${styles.button} ${styles.view}`}>View</button>
                   </Link>
-                  <button className={`${styles.button} ${styles.delete}`}>Delete</button>
+                  <form action={deleteUser}>
+                    <input type='hidden' name="id" value={user.id} />
+                    <button className={`${styles.button} ${styles.delete}`}>Delete</button>
+                  </form>
                 </div>
               </td>
             </tr>
