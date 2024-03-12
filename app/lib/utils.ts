@@ -6,7 +6,7 @@ type connectionProps = {
 
 export const connectToDB = async () => {
 
-    const connection: connectionProps  = {}
+    const connection: connectionProps = {}
 
     try {
         if (connection.isConnected) return;

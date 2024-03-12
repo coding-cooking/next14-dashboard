@@ -37,6 +37,34 @@ export const addUser = async (formData) => {
     redirect("/dashboard/users");
 }
 
+export const updateUser = async (formData) => {
+    let { id, username, email, password, phone, isAdmin, isActive, address } = Object.fromEntries(formData);
+    //transform the data type from string to boolean
+    isAdmin = isAdmin === 'true' ? true : false;
+    isActive = isActive === 'true' ? true : false;
+
+    try {
+        connectToDB();
+
+        const updateFields = {
+            username, email, password, phone,address, isAdmin, isActive
+        };
+
+        Object.keys(updateFields).forEach(
+            (key) => (updateFields[key] === "" || undefined) && delete updateFields[key]
+        );
+        console.log("update",username)
+
+        await User.findByIdAndUpdate(id, updateFields);
+        
+    } catch (error) {
+        console.log(error);
+        throw new Error("Fail to create new user")
+    }
+    revalidatePath("/dashboard/users");
+    redirect("/dashboard/users");
+}
+
 export const deleteUser = async (formData) => {
     let { id } = Object.fromEntries(formData);
     

@@ -7,7 +7,7 @@ import Pagination from '../../ui/dashboard/pagination/Pagination'
 import { fetchUsers } from '../../lib/data'
 import { deleteUser } from '../../lib/actions'
 
-type User = {
+export type UserInterface = {
   id: string,
   createdAt: Date,
   username: string,
@@ -20,7 +20,14 @@ type User = {
   address?: string,
 }
 
-const UsersPage = async ({searchParams}) => {
+type UserpageProps = {
+  searchParams: {
+    q: string,
+    page: string,
+  }
+}
+
+const UsersPage = async ({ searchParams }: UserpageProps) => {
   const q = searchParams?.q || "";
   const page = searchParams?.page || "1";
   const {count, users} = await fetchUsers(q, page);
@@ -45,7 +52,7 @@ const UsersPage = async ({searchParams}) => {
           </tr>
         </thead>
         <tbody>
-          {(users as User[]).map(user => (
+          {(users as UserInterface[]).map(user => (
             <tr key={user.id}>
               <td><div className={styles.user}>
                 <Image src={user.img || "/noavatar.png"} alt="" width={40} height={40} className={styles.userImage} />

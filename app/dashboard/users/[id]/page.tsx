@@ -1,39 +1,46 @@
 import React from 'react'
 import styles from '../../../ui/dashboard/users/singleUser/singleUser.module.css'
 import Image from 'next/image'
+import { fetchUser } from '../../../lib/data';
+import { UserInterface } from '../page';
+import { updateUser } from '../../../lib/actions';
 
-const SingleUserPage = () => {
+const SingleUserPage = async ({params}) => {
+  const { id } = params;
+  const user:UserInterface = await fetchUser(id);
+
   return (
     <div className={styles.container}>
         <div className={styles.infoContainer}>
             <div className={styles.imgContainer}>
-                  <Image src={"/noavatar.png"} alt="" fill />
+          <Image src={user.img || "/noavatar.png"} alt="" fill />
             </div>
-            John Joe
+            {user.username}
         </div>
         <div className={styles.formContainer}>
-            <form className={styles.form}>
-                <label>Username</label>
-                  <input type="text" name="username" placeholder="John Joe" />
-                <label>Email</label>
-                <input type="email" name="email" placeholder="johnjoe@gmail.com" />
-                <label>Password</label>
-                <input type="password" name="password" />
-                <label>Phone</label>
-                <input type="text" name="phone" placeholder="+123456" />
-                <label>Address</label>
-                <textarea name="address" placeholder="newyork" />
-                <label>Is Admin?</label>
-                <select name="isAdmin" id="isAdmin">
-                    <option>Yes</option>
-                    <option>No</option>
-                </select>
-                <label>Is Active?</label>
-                <select name="isActive" id="isActive">
-                    <option>Yes</option>
-                    <option>No</option>
-                </select>
-                <button>Update</button>
+            <form action={updateUser} className={styles.form}>
+              <input type='hidden' name='id' value={user.id}/>
+              <label>{user.username}</label>
+              <input type="text" name="username" placeholder={ user.username } />
+              <label>Email</label>
+              <input type="email" name="email" placeholder={user.email}   />
+              <label>Password</label>
+              <input type="password" name="password" />
+              <label>Phone</label>
+              <input type="text" name="phone" placeholder={user.phone} />
+              <label>Address</label>
+              <textarea name="address" placeholder={user.address} />
+              <label>Is Admin?</label>
+              <select name="isAdmin" id="isAdmin">
+                  <option selected={user.isAdmin}>Yes</option>
+                  <option selected={user.isAdmin}>No</option>
+              </select>
+              <label>Is Active?</label>
+              <select name="isActive" id="isActive">
+                  <option selected={user.isActive}>Yes</option>
+                  <option selected={user.isActive}>No</option>
+              </select>
+              <button>Update</button>
             </form>
         </div>      
     </div>
