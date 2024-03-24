@@ -59,7 +59,7 @@ export const updateUser = async (formData) => {
         
     } catch (error) {
         console.log(error);
-        throw new Error("Fail to create new user")
+        throw new Error("Fail to update user")
     }
     revalidatePath("/dashboard/users");
     redirect("/dashboard/users");

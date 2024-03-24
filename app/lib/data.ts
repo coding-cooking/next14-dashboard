@@ -1,7 +1,7 @@
 import {Product, User} from './models';
 import { connectToDB } from './utils';
 
-export const fetchUsers = async (q, page) => {
+export const fetchUsers = async (q: string, page: string) => {
 
     const regex = new RegExp(q, "i");
 
@@ -10,7 +10,7 @@ export const fetchUsers = async (q, page) => {
     try{
         connectToDB();
         const count = (await User.find({ username: { $regex: regex } })).length;
-        const users = await User.find({ username: { $regex: regex } }).limit(ITEM_PER_PAGE).skip(ITEM_PER_PAGE * (page-1));
+        const users = await User.find({ username: { $regex: regex } }).limit(ITEM_PER_PAGE).skip(ITEM_PER_PAGE * (Number(page)-1));
         return {count, users};
 
     }catch(err){
@@ -19,7 +19,7 @@ export const fetchUsers = async (q, page) => {
     }
 }
 
-export const fetchUser = async (id) => {
+export const fetchUser = async (id: string) => {
 
     try {
         connectToDB();

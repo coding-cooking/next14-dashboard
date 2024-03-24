@@ -20,14 +20,14 @@ export type UserInterface = {
   address?: string,
 }
 
-type UserpageProps = {
+type UserspageProps = {
   searchParams: {
     q: string,
     page: string,
   }
 }
 
-const UsersPage = async ({ searchParams }: UserpageProps) => {
+const UsersPage = async ({ searchParams }: UserspageProps) => {
   const q = searchParams?.q || "";
   const page = searchParams?.page || "1";
   const {count, users} = await fetchUsers(q, page);

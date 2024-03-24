@@ -25,7 +25,7 @@ type MenuItem = {
   list: SubItem[]
 }
 
-const menuItems = [
+const menuItems= [
   {
     title: "Pages",
     list: [
