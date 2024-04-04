@@ -5,6 +5,7 @@ import { Product, User } from './models';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import bcrypt from 'bcrypt';
+import { signIn } from '../auth';
 
 export const addUser = async (formData) => {
     let { username, email, password, phone, isAdmin, isActive, address } = Object.fromEntries(formData);
@@ -30,7 +31,7 @@ export const addUser = async (formData) => {
         await newUser.save();
 
     } catch (error) {
-        console.log(error);
+        console.log('error is', error);
         throw new Error("Fail to create new user")
     }
     revalidatePath("/dashboard/users");
@@ -113,3 +114,28 @@ export const deleteProduct = async (formData) => {
     }
     revalidatePath("/dashboard/products");
 }
+
+export const authenticate = async (prevState, formData) => {
+    const { username, password } = Object.fromEntries(formData);
+    try {
+        console.log("hello world")
+        const result = await signIn("credentials", { username, password });
+        if (result.ok) {
+            // Authentication successful, exit the function
+            return { success: true, message: null };
+        } else {
+            // Handle failed authentication case
+            return "Wrong Credentials111";
+        }
+    } catch (err) {
+        if (err.message.includes("CredentialsSignin")) {
+            return "Wrong Credentials";
+        }
+        return "An error occurred during authentication";
+        return {
+            success: false,
+            message: "Wrong Credentials.",
+        };
+    }
+};
+

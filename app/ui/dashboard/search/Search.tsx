@@ -22,7 +22,7 @@ const Search = ({ placeholder }: { placeholder: string }) => {
       params.delete("q");
     }
     replace(`${pathname}?${params}`)
-  }, 300);
+  }, 400);
 
   return (
     <div className={styles.container}>
